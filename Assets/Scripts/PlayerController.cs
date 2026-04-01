@@ -3,18 +3,27 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     private Rigidbody playerRb;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    public float jumpForce = 10.0f;
+    public float gravityModifier;
+    public bool isOnGround = true;
+
     void Start()
     {
         playerRb = GetComponent<Rigidbody>();
+        Physics.gravity *= gravityModifier;
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-            playerRb.AddForce(Vector3.up * 10, ForceMode.Impulse);
+            playerRb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            isOnGround = false;
         }
+    }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        isOnGround = true;
     }
 }
