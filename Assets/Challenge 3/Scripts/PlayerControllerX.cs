@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerControllerX : MonoBehaviour
 {
+    private static readonly Vector3 BaseGravity = Vector3.down * 9.81f;
+
     public bool gameOver;
 
     public float floatForce;
@@ -24,7 +26,7 @@ public class PlayerControllerX : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Physics.gravity *= gravityModifier;
+        Physics.gravity = BaseGravity * gravityModifier;
         playerAudio = GetComponent<AudioSource>();
         playerRb = GetComponent<Rigidbody>();
 

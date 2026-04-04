@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    private static readonly Vector3 BaseGravity = Vector3.down * 9.81f;
+
     private Rigidbody playerRb;
     public float jumpForce = 10.0f;
     public float gravityModifier = 1.0f;
@@ -17,7 +19,7 @@ public class PlayerController : MonoBehaviour
     {
         playerAnim = GetComponent<Animator>();
         playerRb = GetComponent<Rigidbody>();
-        Physics.gravity *= gravityModifier;
+        Physics.gravity = BaseGravity * gravityModifier;
         playerAudio = GetComponent<AudioSource>();
     }
 
