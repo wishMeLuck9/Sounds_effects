@@ -1,6 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+#if ENABLE_INPUT_SYSTEM
+using UnityEngine.InputSystem;
+#endif
 
 public class PlayerControllerX : MonoBehaviour
 {
@@ -48,10 +51,26 @@ public class PlayerControllerX : MonoBehaviour
         }
 
         // While space is pressed and player is low enough, float up
-        if (Input.GetKey(KeyCode.Space) && isLowEnough && !gameOver)
+        if (IsFloatInputPressed() && isLowEnough && !gameOver)
         {
             playerRb.AddForce(Vector3.up * floatForce);
         }
+    }
+
+    private bool IsFloatInputPressed()
+    {
+#if ENABLE_INPUT_SYSTEM
+        if (Keyboard.current != null && Keyboard.current.spaceKey.isPressed)
+        {
+            return true;
+        }
+#endif
+
+#if ENABLE_LEGACY_INPUT_MANAGER
+        return Input.GetKey(KeyCode.Space);
+#else
+        return false;
+#endif
     }
 
     private void OnCollisionEnter(Collision other)
